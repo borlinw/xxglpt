@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/xsd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxglpt.sjjs">
+	<select id="selectHjchList" parameterType="hjch" resultType="hjch">
+		select * from (
+		select m.*,rownum rn from (
+			select id,whnf,whbh,'广测汇凭字（20'||whnf||'）第'||whbh||'号' hjwh,hjdw,lxdh,chxmmc,chxmszd,scdw,wcsj,zljcysdw,jcyssj,
+  				   hjchcgfbhmlsl,hjchcgfbhmlxxnr,<!-- a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5, -->
+  				   hjrqm,jsrqm,hjjsn,hjjsy,hjjsr,qzn,qzy,qzr
+			 from HJCH t 
+			 
+		     where 1=1
+		<if test="chxmmc != null and  chxmmc != ''">
+		and chxmmc like '%'||#{chxmmc}||'%'
+		</if>
+		<if test="hjdw != null and  hjdw != ''">
+		and hjdw like '%'||#{hjdw}||'%'
+		</if>
+		<if test="kssj != null and  kssj  != ''">
+		and wcsj>=  #{kssj}
+		</if>
+		<if test="jssj != null and  jssj  != ''">
+		and #{jssj}>=  wcsj
+		</if>
+		order by whnf||whbh
+		)  m
+			where <![CDATA[rownum<=(#{page} * #{rows})]]>
+		) 
+			where RN>((#{page} - 1) * #{rows})
+		
+	</select>
+	<select id="selectHjchListCount" parameterType="hjch" resultType="int">
+		select count(*) from HJCH 
+		where 1=1
+		<if test="chxmmc != null and  chxmmc != ''">
+		and chxmmc like '%'||#{chxmmc}||'%'
+		</if>
+		<if test="hjdw != null and  hjdw != ''">
+		and hjdw like '%'||#{hjdw}||'%'
+		</if>
+		<if test="kssj != null and  kssj  != ''">
+		and wcsj>=  #{kssj}
+		</if>
+		<if test="jssj != null and  jssj  != ''">
+		and #{jssj}>=  wcsj
+		</if>
+	</select>
+
+	<insert id="insertHjch" parameterType="hjch">
+		insert into hjch(id,whnf,whbh,hjdw,lxdh,chxmmc,chxmszd,scdw,wcsj,  zljcysdw,jcyssj,
+        hjchcgfbhmlsl,hjchcgfbhmlxxnr,
+<!--        a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,
+ -->        hjrqm,jsrqm,hjjsn,hjjsy,hjjsr,qzn,qzy,qzr )
+		values (#{id},#{whnf},#{whbh},#{hjdw},#{lxdh},#{chxmmc},#{chxmszd},#{scdw},#{wcsj}, #{zljcysdw},
+		#{jcyssj},#{hjchcgfbhmlsl},#{hjchcgfbhmlxxnr},
+		<!-- #{a1},#{a2},#{a3},#{a4},#{a5},#{b1},#{b2},#{b3},#{b4},#{b5},#{c1},#{c2}
+		,#{c3},#{c4},#{c5}, -->
+		#{hjrqm},#{jsrqm},#{hjjsn},#{hjjsy},#{hjjsr},#{qzn},#{qzy},#{qzr} )
+	</insert>
+	<insert id="addHjchMxBatch"  parameterType="hjchMx"> 
+	insert into Hjch_Mx (id,hjchid,xh,sjlx,sl,zbx,bz) 
+	values (sys_guid(),#{hjchId},#{xh},#{sjlx},#{sl},#{zbx},#{bz})
+	</insert>
+	<delete id="deleteHjchMxById" parameterType="String">
+		delete from HJCH_mx where hjchid=#{id}
+	</delete>	
+	<delete id="deleteHjch" parameterType="String">
+		delete from HJCH where id=#{id}
+	</delete>
+	<update id="updateHjch" parameterType="hjch">
+		update HJCH set whnf=#{whnf},whbh=#{whbh},hjdw=#{hjdw},lxdh=#{lxdh},chxmmc=#{chxmmc},chxmszd=#{chxmszd},scdw=#{scdw},
+		wcsj=#{wcsj},  zljcysdw=#{zljcysdw},jcyssj=#{jcyssj},
+        hjchcgfbhmlsl=#{hjchcgfbhmlsl},hjchcgfbhmlxxnr=#{hjchcgfbhmlxxnr},
+       <!--  a1=#{a1},a2=#{a2},a3=#{a3},a4=#{a4},a5=#{a5},b1=#{b1},b2=#{b2},b3=#{b3},b4=#{b4},b5=#{b5},
+        c1=#{c1},c2=#{c2},c3=#{c3},c4=#{c4},c5=#{c5}, -->
+        hjrqm=#{hjrqm},jsrqm=#{jsrqm},hjjsn=#{hjjsn},hjjsy=#{hjjsy},hjjsr=#{hjjsr},qzn=#{qzn},qzy=#{qzy},qzr=#{qzr}
+		where id=#{id}
+	</update>
+	
+	<select id="selectHjchById2" parameterType="hjch" resultType="hashmap">
+
+			SELECT t.ID A0,t.WHNF||' ' A1,t.WHBH||' ' A2,t.HJDW||' ' A3,t.LXDH||' ' A4,t.CHXMMC||' ' A5,t.CHXMSZD||' ' A6,t.
+			SCDW||' ' A7,t.WCSJ||' ' A8,t.
+			ZLJCYSDW||' ' A9,t.JCYSSJ||' ' A10,t.
+  				   HJCHCGFBHMLSL||' ' A11,replace(t.HJCHCGFBHMLXXNR,'\r\n','\n')||' ' A12,<!-- t.A1||' ' A13,t.A2||' ' A14,t.A3||' ' A15,t.
+  				   A4||' ' A16,t.A5||' ' A17,t.B1||' ' A18,t.
+  				   B2||' ' A19,t.B3||' ' A20,t.B4||' ' A21,t.B5||' ' A22,t.C1||' ' A23,t.C2||' ' A24,t.C3||' ' A25,t.
+  				   C4||' ' A26,t.C5||' ' A27, -->
+  				   t.HJRQM,t.JSRQM,t.HJJSN,t.HJJSY,t.HJJSR,t.QZN,t.QZY,t.QZR<!-- ,m.id mxid,m.hjchid,m.sjlx,m.sl.m.xh,m.zbx,m.bz -->
+			 FROM HJCH T  <!-- left join HJCH_MX m on (t.id=m.hjchid) -->
+		     WHERE ID=#{id}
+    </select>
+	<select id="selectHjchMx" parameterType="hjch" resultType="hjchMx">
+			SELECT *
+			 FROM HJCH_mx T  
+		     WHERE hjchid=#{id}
+    </select>
+    
+    <!-- jcch -->
+    <select id="selectJcchList" parameterType="jcch" resultType="jcch">
+		select * from (
+		select m.*,rownum rn from (
+			select id,whnf,whbh,'广测基凭字（20'||whnf||'）第'||whbh||'号' jcwh,xmfbdw,lxdh,chxmmc,
+			chxmszd,scdw,wcsj,
+			zljcysdw,jcyssj,
+  				   xmzycgzlqdjzt,xmzycgzlxxnr,
+  				   yjrqm,jsrqm,yjjsn,yjjsy,yjjsr,qzn,qzy,qzr
+			 from JCCH t 
+			 
+		     where 1=1
+		<if test="chxmmc != null and  chxmmc != ''">
+		and chxmmc like '%'||#{chxmmc}||'%'
+		</if>
+		<if test="xmfbdw != null and  xmfbdw != ''">
+		and xmfbdw like '%'||#{xmfbdw}||'%'
+		</if>
+		<if test="kssj != null and  kssj  != ''">
+		and wcsj>=  #{kssj}
+		</if>
+		<if test="jssj != null and  jssj  != ''">
+		and #{jssj}>=  wcsj
+		</if>
+		order by whnf||whbh
+		)  m
+			where <![CDATA[rownum<=(#{page} * #{rows})]]>
+		) 
+			where RN>((#{page} - 1) * #{rows})
+		
+	</select>
+	<select id="selectJcchListCount" parameterType="jcch" resultType="int">
+		select count(*) from JCCH 
+		where 1=1
+		<if test="chxmmc != null and  chxmmc != ''">
+		and chxmmc like '%'||#{chxmmc}||'%'
+		</if>
+		<if test="xmfbdw != null and  xmfbdw != ''">
+		and xmfbdw like '%'||#{xmfbdw}||'%'
+		</if>
+		<if test="kssj != null and  kssj  != ''">
+		and wcsj>=  #{kssj}
+		</if>
+		<if test="jssj != null and  jssj  != ''">
+		and #{jssj}>=  wcsj
+		</if>
+	</select>
+
+	<insert id="insertJcch" parameterType="jcch">
+		insert into jcch(id,whnf,whbh, xmfbdw,lxdh,chxmmc,chxmszd,scdw,wcsj,  zljcysdw,jcyssj,
+        xmzycgzlqdjzt,xmzycgzlxxnr,
+      <!-- a1,a2,a3,a4,a5,b1,b2,b3,b4,b5,c1,c2,c3,c4,c5,-->
+         yjrqm,jsrqm,yjjsn,yjjsy,yjjsr,qzn,qzy,qzr )
+		values (#{id},#{whnf},#{whbh},#{xmfbdw},#{lxdh},#{chxmmc},#{chxmszd},#{scdw},#{wcsj}, #{zljcysdw},
+		#{jcyssj},#{xmzycgzlqdjzt},#{xmzycgzlxxnr},
+		 <!--#{a1},#{a2},#{a3},#{a4},#{a5},#{b1},#{b2},#{b3},#{b4},#{b5},#{c1},#{c2}
+		,#{c3},#{c4},#{c5}, -->
+		#{yjrqm},#{jsrqm},#{yjjsn},#{yjjsy},#{yjjsr}, #{qzn},#{qzy},#{qzr})
+	</insert>
+	<insert id="addJcchMxBatch"  parameterType="jcchMx"> 
+	insert into Jcch_Mx (id,jcchid,xh,sjlx,sl,zt,zbx,bz) 
+	values (sys_guid(),#{jcchId},#{xh},#{sjlx},#{sl},#{zt},#{zbx},#{bz})
+	</insert>
+	<delete id="deleteJcchMxById" parameterType="String">
+		delete from JCCH_mx where jcchid=#{id}
+	</delete>	
+	<delete id="deleteJcch" parameterType="String">
+		delete from JCCH where id=#{id}
+	</delete>
+	<update id="updateJcch" parameterType="jcch">
+		update JCCH set whnf=#{whnf},whbh=#{whbh},xmfbdw=#{xmfbdw},lxdh=#{lxdh},chxmmc=#{chxmmc},chxmszd=#{chxmszd},scdw=#{scdw},
+		wcsj=#{wcsj},  zljcysdw=#{zljcysdw},jcyssj=#{jcyssj},
+        xmzycgzlqdjzt=#{xmzycgzlqdjzt},xmzycgzlxxnr=#{xmzycgzlxxnr},
+       <!--  a1=#{a1},a2=#{a2},a3=#{a3},a4=#{a4},a5=#{a5},b1=#{b1},b2=#{b2},b3=#{b3},b4=#{b4},b5=#{b5},
+        c1=#{c1},c2=#{c2},c3=#{c3},c4=#{c4},c5=#{c5}, -->
+        yjrqm=#{yjrqm},jsrqm=#{jsrqm},yjjsn=#{yjjsn},yjjsy=#{yjjsy},yjjsr=#{yjjsr},qzn=#{qzn},qzy=#{qzy},qzr=#{qzr}
+		where id=#{id}
+	</update>
+	
+	<select id="selectJcchById2" parameterType="jcch" resultType="hashmap">
+
+			SELECT t.ID A0,t.WHNF||' ' A1,t.WHBH||' ' A2,t.xmfbdw||' ' A3,t.LXDH||' ' A4,t.CHXMMC||' ' A5,t.CHXMSZD||' ' A6,t.
+			SCDW||' ' A7,t.WCSJ||' ' A8,t.
+			ZLJCYSDW||' ' A9,t.JCYSSJ||' ' A10,
+  				   t.xmzycgzlqdjzt||' ' A11,replace(t.xmzycgzlxxnr,'\r\n','\n')||' ' A12,<!-- t.A1||' ' A13,t.A2||' ' A14,t.A3||' ' A15,t.
+  				   A4||' ' A16,t.A5||' ' A17,t.B1||' ' A18,t.
+  				   B2||' ' A19,t.B3||' ' A20,t.B4||' ' A21,t.B5||' ' A22,t.C1||' ' A23,t.C2||' ' A24,t.C3||' ' A25,t.
+  				   C4||' ' A26,t.C5||' ' A27, -->
+  				   t.yJRQM,t.JSRQM,t.yJJSN,t.yJJSY,t.yJJSR,t.QZN,t.QZY,t.QZR<!-- ,m.id mxid,m.jcchid,m.sjlx,m.sl.m.xh,m.zbx,m.bz -->
+			 FROM JCCH T  <!-- left join JCCH_MX m on (t.id=m.jcchid) -->
+		     WHERE ID=#{id}
+    </select>
+	<select id="selectJcchMx" parameterType="jcch" resultType="jcchMx">
+			SELECT *
+			 FROM JCCH_mx T  
+		     WHERE jcchid=#{id}
+    </select>
+</mapper>

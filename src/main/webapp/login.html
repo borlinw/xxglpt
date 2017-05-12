@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>系统登录</title>
+	<link rel="stylesheet" href="css/index.css"/>
+	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="js/jquery.autocomplete.js" ></script>
+	<script type="text/javascript" src="js/YMLib.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$("#name").focus();
+	});
+	</script>
+</head>
+<body>
+	<div class="wrap_login">
+		<div class="main_login">
+			<div class="login_head">
+				<div class="login_head_l"><img src="images/logo_04.jpg" alt="智能管理系统" width="38" height="38" /></div>
+				<div class="login_head_r"><span>广元市测绘地理信息数据服务管理系统</span><sub class="small">版本号v1.0</sub></div>
+			</div>
+			<div class="login_panel">
+				<div class="login_tit">用户登录</div>
+				<form action="#" method="post">
+					<div class="login_input">
+						<input type="text" id="name" name="tbUser" class="text_input user_name" place-holder="请输入用户名" />
+						<input name="tbPwd" type="password" id="password" class="text_input user_password" place-holder="请输入密码"/>
+						<input type="button" class="summit" value="登录"  onclick="login();"/>
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "/xsd/struts-2.1.7.dtd">
+<struts>
+<package name="sjff" extends="struts-default" namespace="/sjff">
+
+	<action name="selectSjffList" class="sjffController" method="selectSjffList"/>
+	<action name="insertSjff" class="sjffController" method="insertSjff"/>
+	<action name="updateSjff" class="sjffController" method="updateSjff"/>
+	<action name="deleteSjff" class="sjffController" method="deleteSjff"/>
+	<action name="sjffDownDoc" class="sjffController" method="sjffDownDoc"/>
+	
+
+ </package>
+</struts>

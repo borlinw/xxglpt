@@ -1,0 +1,36 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "/xsd/struts-2.1.7.dtd">
+<struts>
+<package name="sjjs" extends="struts-default" namespace="/sjjs">
+
+	<action name="selectHjchList" class="sjjsController" method="selectHjchList"/>
+	<action name="insertHjch" class="sjjsController" method="insertHjch"/>
+	<action name="updateHjch" class="sjjsController" method="updateHjch"/>
+	<action name="deleteHjch" class="sjjsController" method="deleteHjch"/>
+	<action name="hjchDownDoc" class="sjjsController" method="hjchDownDoc"/>
+	<action name="selectHjchMx" class="sjjsController" method="selectHjchMx"/>
+	
+	
+	<action name="selectJcchList" class="sjjsController" method="selectJcchList"/>
+	<action name="insertJcch" class="sjjsController" method="insertJcch"/>
+	<action name="updateJcch" class="sjjsController" method="updateJcch"/>
+	<action name="deleteJcch" class="sjjsController" method="deleteJcch"/>
+	<action name="jcchDownDoc" class="sjjsController" method="jcchDownDoc"/>
+	<action name="selectJcchMx" class="sjjsController" method="selectJcchMx"/>
+	<action name="uploadWjFile" class="cgbaController" method="uploadWjFile"/>
+	<action name="deleteWjfile" class="cgbaController" method="deleteWjfile"/>
+	<action name="deleteWjfile1" class="cgbaController" method="deleteWjfile1"/>
+
+	<action name="insertCgba" class="cgbaController" method="insertCgba"/>
+
+	<action name="updateCgba" class="cgbaController" method="updateCgba"/>
+
+	<action name="deleteCgba" class="cgbaController" method="deleteCgba"/>
+	
+	<action name="selectcgbalist" class="cgbaController" method="selectcgbalist"/>
+	
+	<action name="selectWjfile" class="cgbaController" method="selectWjfile"/>
+	<action name="downWjFile" class="cgbaController" method="downWjFile"/>
+ </package>
+</struts>

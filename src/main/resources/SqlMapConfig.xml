@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"mybatis-3-config.dtd">
+<configuration>
+  <properties resource="dao.properties"/>
+  <typeAliases>
+     <!-- BONECP数据库连接池 -->
+     <typeAlias type="com.hdsx.dao.util.BoneCPFactory" alias="BONECP"/>
+     <typeAlias type="com.xxglpt.xtgl.bean.Master" alias="master"/>
+     <typeAlias type="com.xxglpt.xtgl.bean.Param" alias="param"/>
+     <typeAlias type="com.xxglpt.xtgl.bean.TreeNode" alias="treeNode"/>
+     <typeAlias type="com.xxglpt.xtgl.bean.Unit" alias="unit"/>
+     <typeAlias type="com.xxglpt.sjjs.bean.Hjch" alias="hjch"/>
+	 <typeAlias type="com.xxglpt.sjjs.bean.Sjff" alias="sjff"/>
+	 <typeAlias type="com.xxglpt.sjjs.bean.HjchMx" alias="hjchMx"/>
+	 <typeAlias type="com.xxglpt.sjjs.bean.Jcch" alias="jcch"/>
+	 <typeAlias type="com.xxglpt.sjjs.bean.JcchMx" alias="jcchMx"/>
+ 	 <typeAlias type="com.xxglpt.sjjs.bean.Cgba" alias="cgba"/>
+  </typeAliases>
+  <environments default="jdbc">
+     <environment id="jdbc">
+       <transactionManager type="JDBC"/>
+       <!-- BONECP连接池，推荐在开发时使用 -->
+       <dataSource type="BONECP">
+			<property name="driverClass" value="${driverClass}" />
+			<property name="jdbcUrl" value="${jdbcUrl}" />
+			<property name="username" value="${username}" />
+			<property name="password" value="${password}" />
+			<property name="idleConnectionTestPeriod" value="60" />
+			<property name="idleMaxAge" value="30" />
+			<property name="maxConnectionsPerPartition" value="30" />
+			<property name="minConnectionsPerPartition" value="10" />
+			<property name="partitionCount" value="3" />
+			<property name="acquireIncrement" value="5" />
+			<property name="statementsCacheSize" value="100" />
+			<property name="releaseHelperThreads" value="3" />
+	    </dataSource>     
+<!-- JNDI连接池，推荐在正式发布时使用 -->
+<!--         <dataSource type="JNDI"> -->
+<!--              <property name = "data_source" value= "${data_source}"/> -->
+<!--         </dataSource> -->
+     </environment>
+     
+  </environments>
+	<mappers>
+     <mapper resource="com/xxglpt/xtgl/config/xtgl.xml"/>
+     <mapper resource="com/xxglpt/sjjs/config/sjjs.xml"/>
+     <mapper resource="com/xxglpt/sjjs/config/sjff.xml"/>
+     <mapper resource="com/xxglpt/sjjs/config/cgba.xml"/>
+
+  </mappers>
+</configuration>

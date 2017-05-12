@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/xsd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxglpt.cgba">
+	<insert id="uploadWjFile" parameterType="cgba" >
+		insert into cgba_file(id,wjid,wjname,fileurl,bar,bmjbr,cgzlbh)
+		values(#{id},#{wjid},#{wjname},#{fileurl},#{bar},#{bmjbr},#{cgzlbh})
+	</insert>
+	<!-- <insert id="uploadWjFileUrl" parameterType="fileUrl">
+		insert into plan_upload(id,filename,
+		wjid,
+		wjtype,fileurl) values(#{id},#{filename},
+		#{wjid},#{wjtype},#{fileurl})
+	</insert> -->
+	<delete id="deleteWjfile" parameterType="cgba" >
+		delete from cgba_file where id=#{id}
+	</delete>
+	
+	
+	<select id="selectcgbabyid" parameterType="string" resultType="cgba">
+		select * from CGBA where id=#{value}
+	</select>
+	
+	<delete id="deleteWjfile1" parameterType="string" >
+		delete from cgba_file where wjid=#{value}
+	</delete>
+	<insert id="insertCgba" parameterType="cgba">
+		insert into CGBA(id,xmmc,gsmc,nf,url,wjlx,bar,bmjbr,cgzlbh)
+		values(#{id},#{xmmc},#{gsmc},#{nf},#{url},#{wjlx},#{bar},#{bmjbr},#{cgzlbh})
+	</insert>
+	
+	<update id="updateCgba" parameterType="cgba">
+		update CGBA set xmmc=#{xmmc},gsmc=#{gsmc},nf=#{nf},bar=#{bar},bmjbr=#{bmjbr},cgzlbh=#{cgzlbh}
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteCgba" parameterType="cgba">
+		delete from CGBA where id=#{id}
+	</delete>
+	
+	<select id="selectcgbalist" parameterType="cgba" resultType="cgba">
+		select * from (
+		select m.*,rownum rn from (
+			select * from CGBA 
+			where 1=1
+			<if test="gsmc != null and  gsmc != ''">
+			and gsmc like '%'||#{gsmc}||'%'
+			</if>
+			<if test="xmmc != null and  xmmc != ''">
+			and xmmc like '%'||#{xmmc}||'%'
+			</if>
+			<if test="kssj != null  and kssj != ''">
+					and to_date(nf,'yyyy-mm-dd') >= to_date(#{kssj},'yyyy-mm-dd')
+			</if>
+			<if test="jssj != null and jssj != ''">
+					<![CDATA[and to_date(nf,'yyyy-mm-dd') <= to_date(#{jssj},'yyyy-mm-dd')]]>
+			</if>
+		order by nf desc
+		)  m
+			where <![CDATA[rownum<=(#{page} * #{rows})]]>
+		) 
+			where RN>((#{page} - 1) * #{rows})
+		
+	</select>
+	<select id="selectcgbalistCount" parameterType="cgba" resultType="int">
+		select count(*) from CGBA 
+			where 1=1
+			<if test="gsmc != null and  gsmc != ''">
+			and gsmc like '%'||#{gsmc}||'%'
+			</if>
+			<if test="xmmc != null and  xmmc != ''">
+			and xmmc like '%'||#{xmmc}||'%'
+			</if>
+			<if test="kssj != null  and kssj != ''">
+					and to_date(nf,'yyyy-mm-dd') >= to_date(#{kssj},'yyyy-mm-dd')
+			</if>
+			<if test="jssj != null and jssj != ''">
+					<![CDATA[and to_date(nf,'yyyy-mm-dd') <= to_date(#{jssj},'yyyy-mm-dd')]]>
+			</if>
+	</select>
+	
+	<select id="selectWjfile" parameterType="cgba" resultType="cgba">
+		select id,wjid,wjname,fileurl from ZCWJ_FILE where wjid=#{wjid}
+	</select>
+	<select id="selectWjfileByWjid" parameterType="cgba" resultType="cgba">
+		select id,wjid,wjname,fileurl from ZCWJ_FILE where id=#{wjid}
+	</select>
+	
+	<select id="selectWjById" parameterType="cgba" resultType="cgba">
+		select * from ZCWJ_FILE where id=#{id}
+	</select>
+</mapper>

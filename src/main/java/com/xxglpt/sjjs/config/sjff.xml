@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/xsd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxglpt.sjff">
+	
+	<select id="selectSjffList" parameterType="sjff" resultType="sjff">
+		select * from (
+		select m.*,rownum rn from (
+			select id,bh,dwmc,xxdz,zzjgdm,fddbr,frzshm,yzbm,jbrxm,sfzhm,lxdh,dzyx,
+				bmjgmc,bmryxm,bmyzbm,bmlxdh,bmxxdz,bmdzyx,
+				zgbmmc,zgcbks,zgyzbm,zglxdh,zgxxdz,
+				xmly,symd,sxsjzlmc,zlfwjdjsl,sqsj,chxzzgbmyj,bz
+			 from SJFF t
+		     where 1=1
+		<if test="xmly != null and  xmly != ''">
+		and xmly like '%'||#{xmly}||'%'
+		</if>
+		<if test="dwmc != null and  dwmc != ''">
+		and dwmc like '%'||#{dwmc}||'%'
+		</if>
+		<if test="kssj != null and  kssj  != ''">
+		and sqsj>=  #{kssj}
+		</if>
+		<if test="jssj != null and  jssj  != ''">
+		and #{jssj}>=  sqsj
+		</if>
+		order by bh
+		)  m
+			where <![CDATA[rownum<=(#{page} * #{rows})]]>
+		) 
+			where RN>((#{page} - 1) * #{rows})
+		
+	</select>
+	<select id="selectSjffListCount" parameterType="sjff" resultType="int">
+		select count(*) from Sjff 
+		where 1=1
+		<if test="xmly != null and  xmly != ''">
+		and xmly like '%'||#{xmly}||'%'
+		</if>
+		<if test="dwmc != null and  dwmc != ''">
+		and dwmc like '%'||#{dwmc}||'%'
+		</if>
+		<if test="kssj != null and  kssj  != ''">
+		and sqsj>=  #{kssj}
+		</if>
+		<if test="jssj != null and  jssj  != ''">
+		and #{jssj}>=  sqsj
+		</if>
+	</select>
+
+	<insert id="insertSjff" parameterType="sjff">
+		insert into sjff(id, dwmc,xxdz,zzjgdm,fddbr,frzshm,yzbm,jbrxm,sfzhm,lxdh,dzyx,
+	bmjgmc,bmryxm,bmyzbm,bmlxdh,bmxxdz,bmdzyx,
+	zgbmmc,zgcbks,zgyzbm,zglxdh,zgxxdz,
+	xmly,symd,sxsjzlmc,zlfwjdjsl,chxzzgbmyj,bz,sqsj,bh)
+		values (SYS_GUID(), #{dwmc},#{xxdz},#{zzjgdm},#{fddbr},#{frzshm},#{yzbm},
+		#{jbrxm},#{sfzhm},#{lxdh},#{dzyx},
+		#{bmjgmc},#{bmryxm},#{bmyzbm},#{bmlxdh},#{bmxxdz},#{bmdzyx},
+		#{zgbmmc},#{zgcbks},#{zgyzbm},#{zglxdh},#{zgxxdz},#{xmly},
+		#{symd},#{sxsjzlmc},#{zlfwjdjsl},#{chxzzgbmyj},#{bz},#{sqsj},#{bh})
+	</insert>
+	
+	<delete id="deleteSjff" parameterType="String">
+		delete from Sjff where id=#{id}
+	</delete>
+	<update id="updateSjff" parameterType="sjff">
+		update Sjff set dwmc=#{dwmc},xxdz=#{xxdz},zzjgdm=#{zzjgdm},fddbr=#{fddbr},frzshm=#{frzshm},yzbm=#{yzbm},
+		jbrxm=#{jbrxm},sfzhm=#{sfzhm},lxdh=#{lxdh},dzyx=#{dzyx},
+		bmjgmc=#{bmjgmc},bmryxm=#{bmryxm},bmyzbm=#{bmyzbm},bmlxdh=#{bmlxdh},bmxxdz=#{bmxxdz},bmdzyx=#{bmdzyx},
+		zgbmmc=#{zgbmmc},zgcbks=#{zgcbks},zgyzbm=#{zgyzbm},zglxdh=#{zglxdh},zgxxdz=#{zgxxdz},xmly=#{xmly},
+		symd=#{symd},sxsjzlmc=#{sxsjzlmc},zlfwjdjsl=#{zlfwjdjsl},chxzzgbmyj=#{chxzzgbmyj},bz=#{bz},sqsj=#{sqsj},bh=#{bh}
+		where id=#{id}
+	</update>
+	
+	<select id="selectSjffById2" parameterType="sjff" resultType="hashmap">
+
+			SELECT id||' ' A0,bh||' ' A1, dwmc||' ' A2,xxdz||' ' A3,zzjgdm||' ' A4,fddbr||' ' A5,frzshm||' ' A6,
+			yzbm||' ' A7,jbrxm||' ' A8,sfzhm||' ' A9,lxdh||' ' A10,dzyx||' ' A11,
+	bmjgmc||' ' A12,bmryxm||' ' A13,bmyzbm||' ' A14,bmlxdh||' ' A15,bmxxdz||' ' A16,bmdzyx||' ' A17,
+	zgbmmc||' ' A18,zgcbks||' ' A19,zgyzbm||' ' A20,zglxdh||' ' A21,zgxxdz||' ' A22,
+	replace(xmly,'\r\n','\n')||' ' A23,replace(symd,'\r\n','\n')||' ' A24,replace(sxsjzlmc,'\r\n','\n')||' ' A25,replace(zlfwjdjsl,'\r\n','\n')||' ' A26,
+	replace(chxzzgbmyj,'\r\n','\n')||' ' A27,replace(BZ,'\r\n','\n')||' ' A28,sqsj||' ' A29
+			 FROM Sjff T
+		     WHERE ID=#{id}
+    </select>
+</mapper>

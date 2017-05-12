@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+ <html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+     <title></title>
+     <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+ <link rel="stylesheet" href="css/login2.css"/>
+ <script type="text/javascript"></script>
+ <style type="text/css">
+    abbr
+    {
+        font-size: 12px;
+    }
+    .text10pxwhite
+    {
+        font-size: 10px;
+        color: #FFFFFF;
+    }
+    </style>
+ 
+ </head>
+ <body>
+     <div >
+         <div id="divInsert">
+             <div id="divBtn">
+                 <input id="btnDelete" type="button" value="删除行" />
+                 <input id="btnData" type="button" value="插入行" />
+                 <input id="btnInsert" type="button" value="添加行" />
+             </div>
+         </div>
+         <table id="tab" cellpadding="0" cellspacing="0">
+             <tr>
+                 <td rowspan="2">姓名</td>
+                 <td rowspan="2">年龄</td>
+                 <td colspan="2">血压</td>
+             </tr>
+             <tr>
+                 <td>高压</td>
+                 <td>低压</td>
+             </tr>
+         </table>
+     </div>
+     <div id="mydiv"></div>
+ </body>
+ </html>
+<script type="text/javascript">
+
+ $(function () {
+     //定义一个全局变量i,用来标识添加了几行
+    var row = 0;
+     var strValue = "";
+     //将一行添加到table中去
+    $('#btnInsert').click(function () {
+         row++;
+         //字符串拼接tr一行中的内容
+        var tr = "<tr>";
+         for (var i = 0; i < 3; i++) {
+             tr += "<td><input id='" + row + "text'" + i + "+' type='text' value=" + row +""+ i + " /></td>";
+         }
+         tr += "<td><input class='txt' id='" + i + "text4'+ type='text' value=" + row + "" + 4 + " /><input id='Checkbox1' class='ck' name='ckb' type='checkbox' /> </td></tr>";
+         
+         alert(tr);
+         $("#tab").append(tr);
+     })
+     //删除添加的行，先判断checkbox是否选中，然后删除
+    $('#btnDelete').click(function () {
+         $("input[name=ckb]:checked").each(function () { $(this).parent().parent().remove(); });
+     })
+     //将i遍历，判断是否存有值，如果有将数据插入数据库
+    $('#btnData').click(function () {
+         $('#tab input').each(function () {
+             strValue += $(this).val() + ",";
+         })
+         
+         alert(strValue);
+         $.ajax({
+             type: 'post',
+             contentType: 'application/json',
+             url: "../WebService1.asmx/InsertInfo",
+             data: "{valuesStr:'" + strValue + "'}",
+             success: function (result) {
+                 $('#mydiv').html(result.d);
+             }
+         })
+     })
+ })
+
+</script>
