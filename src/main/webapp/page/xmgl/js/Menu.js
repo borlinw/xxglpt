@@ -1,10 +1,17 @@
 $(function() {
 	createMenu('LeftMenu',{
 		id:'menu_010101',
-		title:'数据分发',
+		title:'项目管理',
 		imgSrc:'../../images/zcwj.png',
 		renderTo:'left_menu1',
-		href:'./sjff.jsp'
+		href:'./jcch.jsp'
+	});
+	createMenu('LeftMenu',{
+		id:'menu_010102',
+		title:'项目查询',
+		imgSrc:'../../images/zcwj.png',
+		renderTo:'left_menu1',
+		href:'./hjch.jsp'
 	});
 	
 	menuQx();

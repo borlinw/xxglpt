@@ -1,41 +1,32 @@
 $(function() {
 	createMenu('LeftMenu',{
-		id:'menu_010301',
-		title:'基础测绘',
+		id:'menu_010201',
+		title:'合同管理',
 		imgSrc:'../../images/zcwj.png',
 		renderTo:'left_menu1',
-		href:'./zcwj.jsp'
+		href:'./sjff.jsp'
 	});
 	createMenu('LeftMenu',{
-		id:'menu_010302',
-		title:'成果汇交',
+		id:'menu_010202',
+		title:'费用申请',
 		imgSrc:'../../images/zcwj.png',
 		renderTo:'left_menu1',
-		href:'../sjjs/hjch2.jsp'
+		href:'./sjff.jsp'
 	});
 	createMenu('LeftMenu',{
-		id:'menu_010303',
-		title:'成果备案',
-		imgSrc:'../../images/qtwj.png',
+		id:'menu_010203',
+		title:'现金账管理',
+		imgSrc:'../../images/zcwj.png',
 		renderTo:'left_menu1',
-		href:'./bgda.jsp'
+		href:'./sjff.jsp'
 	});
 	createMenu('LeftMenu',{
-		id:'menu_010304',
-		title:'文件共享',
-		imgSrc:'../../images/qtwj.png',
+		id:'menu_010204',
+		title:'薪酬管理',
+		imgSrc:'../../images/zcwj.png',
 		renderTo:'left_menu1',
-		href:'./bgdaNoEdit.jsp'
+		href:'./sjff.jsp'
 	});
-	createMenu('LeftMenu',{
-		id:'menu_010305',
-		title:'数据分发',
-		imgSrc:'../../images/gcwj.png',
-		renderTo:'left_menu1',
-		href:'../sjff/sjff2.jsp'
-	});
-
-
 	menuQx();
 	$("div[id^='menu'] a").click(function(){
 		$(this).css("color","#0000ee");

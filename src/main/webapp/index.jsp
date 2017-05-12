@@ -39,7 +39,7 @@ $(function(){
         $("#c2,#c3,#c4").hide();
         $("#c1").show();
         if (c1){
-            $("#c1f").attr("src", "page/sjjs/Menu.jsp");
+            $("#c1f").attr("src", "page/xmgl/Menu.jsp");
         }
     });
     //menuQx();
@@ -111,9 +111,9 @@ function edit(){
 			    <div class="system"><a onclick="edit()" href="javascript:void(0)">修改密码</a><em>|</em>
 			    	<a onclick="clearSession()" href="javascript:void(0)">退出系统</a></div>
 				<ul class="nav">
-					<li id="menu_0101" style="display:none;"><a id="Menu_1" href="javascript:void(0)">数据接收</a></li>
-					<li id="menu_0102" style="display:none;"><a id="Menu_2" href="javascript:void(0)">数据分发</a></li>
-					<li id="menu_0103" style="display:none;"><a id="Menu_3" href="javascript:void(0)">数据查询</a></li>
+					<li id="menu_0101" style="display:none;"><a id="Menu_1" href="javascript:void(0)">项目管理</a></li>
+					<li id="menu_0102" style="display:none;"><a id="Menu_2" href="javascript:void(0)">财务管理</a></li>
+					<li id="menu_0103" style="display:none;"><a id="Menu_3" href="javascript:void(0)">考勤管理</a></li>
 					<li id="menu_0104" style="display:none;"><a id="Menu_4" href="javascript:void(0)">系统管理</a></li>
 				</ul> 
 			</div>
@@ -134,7 +134,7 @@ function edit(){
 		</div>
     </div>
     <div data-options="region:'south',border:false,split:false" style="height: 25px;color:#FFF;line-height: 25px; background: url(image/footerbg.gif) 0 0 repeat-x; text-align: center;overflow: hidden;">
-        <p>版权所有：广元市测绘地理信息中心 &nbsp;&nbsp;&nbsp;&nbsp; 技术支持：王冬</p>
+        <p>版权所有：四川研图测绘地理信息有限公司 &nbsp;&nbsp;&nbsp;&nbsp; 技术支持：王冬</p>
     </div>
 </body>
 </html>
